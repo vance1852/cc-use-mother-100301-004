@@ -33,3 +33,14 @@ class ConflictError(DomainError):
 
     code = "conflict"
     status = 409
+
+
+class ChemicalReviewError(DomainError):
+    """化学品入库或移位未通过共储与屏障审查。"""
+
+    code = "chemical_review_rejected"
+    status = 422
+
+    def __init__(self, violations: list[str]) -> None:
+        super().__init__("；".join(violations))
+        self.violations = violations
